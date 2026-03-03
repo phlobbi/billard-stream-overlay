@@ -122,13 +122,24 @@ export default function Control() {
   }, []);
 
   async function handleUpdate(playerId, fields) {
-    const update = { [playerId]: fields };
-    // Optimistic update
-    setState((prev) => ({
-      ...prev,
-      [playerId]: { ...prev[playerId], ...fields },
-    }));
-    await postState(update);
+    const otherId = playerId === 'p1' ? 'p2' : 'p1';
+    const opposite = { half: 'full', full: 'half' };
+
+    if ('ballType' in fields && fields.ballType !== null) {
+      const otherBallType = opposite[fields.ballType];
+      setState((prev) => ({
+        ...prev,
+        [playerId]: { ...prev[playerId], ...fields },
+        [otherId]: { ...prev[otherId], ballType: otherBallType },
+      }));
+      await postState({ [playerId]: fields, [otherId]: { ballType: otherBallType } });
+    } else {
+      setState((prev) => ({
+        ...prev,
+        [playerId]: { ...prev[playerId], ...fields },
+      }));
+      await postState({ [playerId]: fields });
+    }
   }
 
   async function handleCenterText(e) {
