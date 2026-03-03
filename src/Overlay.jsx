@@ -21,7 +21,7 @@ function BallIcon({ type }) {
       style={{
         background: isFull
           ? '#ff0909'
-          : 'linear-gradient(to bottom, #ff0909 30%, white 30%, white 70%, #ff0909 70%)',
+          : 'linear-gradient(to bottom, white 20%, #ff0909 20%, #ff0909 80%, white 80%)',
         boxShadow: '1px 1px 4px rgba(0,0,0,0.8)',
       }}
     />
