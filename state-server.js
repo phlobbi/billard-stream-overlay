@@ -9,8 +9,8 @@ const wss = new WebSocketServer({ server });
 const PORT = 3001;
 
 let state = {
-  p1: { name: 'Player 1', score: 0 },
-  p2: { name: 'Player 2', score: 0 },
+  p1: { name: 'Player 1', score: 0, ballType: null },
+  p2: { name: 'Player 2', score: 0, ballType: null },
   centerText: 'VS',
 };
 

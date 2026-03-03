@@ -26,6 +26,10 @@ function PlayerControl({ id, player, onUpdate }) {
     onUpdate(id, { score: 0 });
   }
 
+  function selectBallType(type) {
+    onUpdate(id, { ballType: player.ballType === type ? null : type });
+  }
+
   return (
     <div className="flex flex-col gap-4 bg-gray-800 rounded-2xl p-6 flex-1">
       <h2 className="text-lg font-bold text-gray-300 uppercase tracking-widest">
@@ -65,6 +69,33 @@ function PlayerControl({ id, player, onUpdate }) {
         </div>
       </div>
 
+      {/* Ball type */}
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-gray-400">Ball type</span>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => selectBallType('half')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+              player.ballType === 'half'
+                ? 'bg-indigo-600 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            Half
+          </button>
+          <button
+            onClick={() => selectBallType('full')}
+            className={`px-3 py-1.5 rounded-lg text-sm font-semibold transition-all ${
+              player.ballType === 'full'
+                ? 'bg-indigo-600 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            Full
+          </button>
+        </div>
+      </div>
+
       {/* Reset */}
       <button
         onClick={resetScore}
@@ -78,8 +109,8 @@ function PlayerControl({ id, player, onUpdate }) {
 
 export default function Control() {
   const [state, setState] = useState({
-    p1: { name: 'Player 1', score: 0 },
-    p2: { name: 'Player 2', score: 0 },
+    p1: { name: 'Player 1', score: 0, ballType: null },
+    p2: { name: 'Player 2', score: 0, ballType: null },
     centerText: 'VS',
   });
 
@@ -106,6 +137,15 @@ export default function Control() {
     await postState({ centerText });
   }
 
+  async function handleResetBallTypes() {
+    setState((prev) => ({
+      ...prev,
+      p1: { ...prev.p1, ballType: null },
+      p2: { ...prev.p2, ballType: null },
+    }));
+    await postState({ p1: { ballType: null }, p2: { ballType: null } });
+  }
+
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-8">
       <h1 className="text-3xl font-black mb-8 tracking-tight">
@@ -115,7 +155,7 @@ export default function Control() {
         <PlayerControl id="p1" player={state.p1} onUpdate={handleUpdate} />
         <PlayerControl id="p2" player={state.p2} onUpdate={handleUpdate} />
       </div>
-      <div className="mt-4 w-full max-w-2xl bg-gray-800 rounded-2xl p-6">
+      <div className="mt-4 w-full max-w-2xl bg-gray-800 rounded-2xl p-6 flex flex-col gap-4">
         <label className="flex flex-col gap-1">
           <span className="text-sm text-gray-400">Center text (shown between players)</span>
           <input
@@ -125,6 +165,12 @@ export default function Control() {
             className="bg-gray-700 text-white rounded-lg px-3 py-2 text-base outline-none focus:ring-2 focus:ring-indigo-500 max-w-xs"
           />
         </label>
+        <button
+          onClick={handleResetBallTypes}
+          className="bg-gray-600 hover:bg-gray-500 active:scale-95 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-all self-start"
+        >
+          Reset ball types
+        </button>
       </div>
       <p className="mt-8 text-sm text-gray-500">
         Overlay URL for OBS:{' '}

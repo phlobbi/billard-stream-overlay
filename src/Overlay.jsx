@@ -4,10 +4,29 @@ const STATE_URL = 'http://localhost:3001/state';
 const WS_URL = 'ws://localhost:3001';
 
 const defaultState = {
-  p1: { name: 'Player 1', score: 0 },
-  p2: { name: 'Player 2', score: 0 },
+  p1: { name: 'Player 1', score: 0, ballType: null },
+  p2: { name: 'Player 2', score: 0, ballType: null },
   centerText: 'VS',
 };
+
+function BallIcon({ type }) {
+  if (!type) return null;
+
+  const isFull = type === 'full';
+  return (
+    <span
+      data-testid="ball-icon"
+      title={isFull ? 'Full' : 'Half'}
+      className="inline-block w-6 h-6 rounded-full border-2 border-white shrink-0"
+      style={{
+        background: isFull
+          ? '#facc15'
+          : 'linear-gradient(to bottom, #facc15 30%, white 30%, white 70%, #facc15 70%)',
+        boxShadow: '1px 1px 4px rgba(0,0,0,0.8)',
+      }}
+    />
+  );
+}
 
 function PlayerPanel({ player, align }) {
   const isLeft = align === 'left';
@@ -22,12 +41,15 @@ function PlayerPanel({ player, align }) {
         >
           {player.score}
         </span>
-        <span
-          className="text-2xl font-bold mt-1 uppercase tracking-widest"
-          style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.9)' }}
-        >
-          {player.name}
-        </span>
+        <div className={`flex items-center gap-2 mt-1 ${isLeft ? '' : 'flex-row-reverse'}`}>
+          <span
+            className="text-2xl font-bold uppercase tracking-widest"
+            style={{ textShadow: '1px 1px 6px rgba(0,0,0,0.9)' }}
+          >
+            {player.name}
+          </span>
+          <BallIcon type={player.ballType} />
+        </div>
       </div>
     </div>
   );
