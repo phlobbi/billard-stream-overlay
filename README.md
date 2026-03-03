@@ -21,7 +21,6 @@ billard-stream-overlay
 │   ├── Overlay.jsx      # OBS browser source overlay
 │   ├── Control.jsx      # Scoreboard control panel
 │   ├── index.jsx
-│   ├── App.css
 │   └── index.css
 ├── state-server.js      # Express + WebSocket state server (port 3001)
 ├── index.html
