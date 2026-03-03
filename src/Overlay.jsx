@@ -20,8 +20,8 @@ function BallIcon({ type }) {
       className="inline-block w-6 h-6 rounded-full border-2 border-white shrink-0"
       style={{
         background: isFull
-          ? '#facc15'
-          : 'linear-gradient(to bottom, #facc15 30%, white 30%, white 70%, #facc15 70%)',
+          ? '#ff0909'
+          : 'linear-gradient(to bottom, #ff0909 30%, white 30%, white 70%, #ff0909 70%)',
         boxShadow: '1px 1px 4px rgba(0,0,0,0.8)',
       }}
     />
