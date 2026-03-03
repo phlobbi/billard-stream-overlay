@@ -57,6 +57,13 @@ Make sure that these ports are not already in use.
 3. Set the browser source dimensions to match your canvas (e.g. 1920×1080) and enable **transparent background**.
 4. Open `http://localhost:3000/control` in a browser window to control the scoreboard live.
 
+> [!TIP]
+> If you plan to use OBS as a Virtual Camera and don't see it showing up in your devices, do the following:
+>
+> 1. Use the [install script](https://obsproject.com/kb/virtual-camera-troubleshooting) provided in the OBS files.
+> 2. Restart your system.
+> 3. You should now be able to see the Virtual Camera once activated in OBS.
+
 ## License
 
 This project is licensed under the terms of the [MIT license](LICENSE).
